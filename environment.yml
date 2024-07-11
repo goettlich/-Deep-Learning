@@ -5,11 +5,11 @@ channels:
   - pytorch
   - nvidia
 dependencies:
-  - python=3.12
+  - python=3.11
   - jupyter
   - nbconvert
   - numpy
   - matplotlib
-  - pytorch
-  - torchvision
-  - cudatoolkit=12
+  - pytorch::pytorch
+  - pytorch::torchvision
+  - nvidia::cudatoolkit

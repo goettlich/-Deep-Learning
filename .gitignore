@@ -1,3 +1,4 @@
 eval/*
 data/*
 *.png
+*.ckpt
