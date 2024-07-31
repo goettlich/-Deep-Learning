@@ -32,9 +32,12 @@ class DoubleConv(nn.Module):
 
         self.conv1 = nn.Sequential(
             nn.Conv2d(in_channels, mid_channels, kernel_size=3, padding=1),
-            nn.BatchNorm2d(mid_channels),
+            nn.InstanceNorm2d(mid_channels),
+            # nn.BatchNorm2d(mid_channels),
+            # nn.GroupNorm(mid_channels, mid_channels),
             nn.ReLU(inplace=True)
         )
+
 
         self.time_mlp = nn.Sequential(
                 nn.Linear(t_emb_dim, mid_channels),
@@ -44,7 +47,9 @@ class DoubleConv(nn.Module):
         
         self.conv2 = nn.Sequential(
             nn.Conv2d(mid_channels, out_channels, kernel_size=3, padding=1),
-            nn.BatchNorm2d(out_channels),
+            nn.InstanceNorm2d(mid_channels),
+            # nn.BatchNorm2d(out_channels),
+            # nn.GroupNorm(out_channels, out_channels),
             nn.ReLU(inplace=True)
         )
 
