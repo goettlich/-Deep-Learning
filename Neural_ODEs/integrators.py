@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import numpy as np
+import torch
 
 class Integrator(ABC):
     
@@ -11,7 +12,7 @@ class RK4(Integrator):
     
     def __init__(self, dt=0.01):
 
-        super.__init__()
+        super().__init__()
         self.dt = dt
 
     def rk4_step(self, f, x, t, dt):
@@ -27,7 +28,8 @@ class RK4(Integrator):
 
         idx=1
         t_now = t[0]
-        x = np.zeros(shape=(len(t),len(x0)))
+        # x = np.zeros(shape=(len(t),len(x0)))
+        x = torch.zeros(size=(len(t),*x0.shape))
         x[0], x_now = x0, x0
         
         while idx < len(t):
