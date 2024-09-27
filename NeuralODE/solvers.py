@@ -1,6 +1,6 @@
 import numpy as np
 
-def rk4_step(f, y, t, dt=0.01):
+def rk4_step(f, y, t, dt):
     """
     f can be either the RHS of a diffEq, or e.g. a torch Network().
     Why dependent on time? To cope with systems that are not time-invariant.
@@ -14,7 +14,7 @@ def rk4_step(f, y, t, dt=0.01):
     
     return y + dt/6* (k1 + 2*k2 + 2*k3 + k4)
 
-def rk4_solve(f, y0, t=[0,1], dt=0.01):
+def rk4_solve(f, y0, t, dt):
     
     idx=1
     t_now = t[0]
@@ -33,11 +33,13 @@ def rk4_solve(f, y0, t=[0,1], dt=0.01):
             
     return y
     
-def ODESolve(f, y0, t=[0,1], method='rk4', dt=0.01):
+def ODESolve(f, y0, t=[0,1], method='rk4', *args, **kwargs):
 
     if method=='rk4':
-        return rk4_solve(f, y0, t, dt)
+        return rk4_solve(f, y0, t, *args, **kwargs) # requires dt
     
+
+
 
 
 
