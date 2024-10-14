@@ -87,13 +87,13 @@ class MLP(nn.Module):
             self.layers = nn.ModuleList([
                 nn.Sequential(
                     nn.Linear(layer_dims[i], layer_dims[i+1]),
-                    nn.Tanh()
-                    # nn.LayerNorm(n_hidden[i-1])
+                    nn.ELU()#,
+                    # nn.LayerNorm(layer_dims[i-1])
                     )
                 for i in range(len(layer_dims[:-1]))])
             
-            for i,h in self.layers[1:]:
-                nn.init.uniform_(h.weight[0], -math.sqrt(1 / layer_dims[i+1]), math.sqrt(1 / layer_dims[i+1]))
+            for i,h in enumerate(self.layers):
+                nn.init.uniform_(h[0].weight, -math.sqrt(1 / layer_dims[i+1]), math.sqrt(1 / layer_dims[i+1]))
 
             self.out_layer = nn.Sequential(
                 nn.Linear(layer_dims[-1], n_output_states)

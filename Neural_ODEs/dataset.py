@@ -10,12 +10,12 @@ class TrajectoryDataset(torch.utils.data.Dataset):
     # TODO: 
     # - pass parameters to integrator (dt, ...)
     # - pass parameters to ode (physics parameters, ...)
-    def __init__(self, ode, num_timesteps=100, dt_out=0.05, dt_solver=0.01, samples_per_epoch=100):
+    def __init__(self, ode, num_timesteps_out=100, dt_out=0.05, dt_solver=0.01, samples_per_epoch=100):
         
         self.ode = ode
         self.integrator = RK4(dt=dt_solver)
 
-        self.num_timesteps = num_timesteps
+        self.num_timesteps_out = num_timesteps_out
         self.samples_per_epoch = samples_per_epoch
         self.dt_out = dt_out
         self.dt_solver = dt_solver
@@ -38,7 +38,7 @@ class TrajectoryDataset(torch.utils.data.Dataset):
         else:
             raise(NotImplementedError)
         
-        t = np.arange(start=0, stop=self.num_timesteps*self.dt_out, step=self.dt_out)
+        t = np.arange(start=0, stop=self.num_timesteps_out*self.dt_out, step=self.dt_out)
         # Solver solves with dt_solver, but outputs dt_out steps 
         trajectory = self.integrator.solve(f=self.ode, x0=start, t=t)
-        return torch.tensor(trajectory).float()
+        return (torch.as_tensor(trajectory).float(), torch.as_tensor(t).float())
