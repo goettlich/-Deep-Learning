@@ -13,7 +13,7 @@ class TrajectoryDataset(torch.utils.data.Dataset):
     def __init__(self, ode, num_timesteps_out=100, dt_out=0.05, dt_solver=0.01, samples_per_epoch=100):
         
         self.ode = ode
-        self.integrator = RK4(dt=dt_solver)
+        self.integrator = RK4(dt_solver=dt_solver)
 
         self.num_timesteps_out = num_timesteps_out
         self.samples_per_epoch = samples_per_epoch

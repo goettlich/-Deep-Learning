@@ -10,10 +10,10 @@ class Integrator(ABC):
     
 class RK4(Integrator):
     
-    def __init__(self, dt=0.01):
+    def __init__(self, dt_solver=0.01):
 
         super().__init__()
-        self.dt = dt
+        self.dt = dt_solver
 
     def rk4_step(self, f, x, t, dt):
 
@@ -46,6 +46,17 @@ class RK4(Integrator):
                 idx += 1
                 
         return x[-1] if last_only else x
+    
+
+class IntegratorFactory:
+
+    @staticmethod
+    def get_integrator(name: str, **kwargs) -> Integrator:
+        if name == 'RK4':
+            return RK4(**kwargs)
+        
+        else:
+            raise ValueError(f"Unknown Integrator: {name}")
 
 
 

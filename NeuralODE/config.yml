@@ -1,0 +1,38 @@
+# general settings
+exp_dir: '0' # place holder
+
+# System settings
+system: pendulum
+system_cfg:
+  pendulum:
+    integrator: RK4
+    dt_solver: 0.02 # solver step
+    dt_out: 0.02
+    n_sample_steps: 250
+  lorenz:
+    integrator: RK4
+    dt_solver: 0.02 # solver step
+    dt_out: 0.02
+    n_sample_steps: 250
+
+# training config
+train_cfg:
+  batch_size: 4
+  training_iters: 5000
+  points_per_sample: 32
+  log_every: 10
+  seed: 0
+
+model_names: ['RNN'] # ['NODE-MLP', 'RNN']
+model_cfg:
+  NODE-MLP:
+    integrator_name: RK4
+    dt_solver: 0.02 # solver step
+    hidden_layers: [16,]
+    optimizer: 'Adam'
+    learning_rate: 0.01
+  RNN:
+    num_layers: 1
+    hidden_size: 32
+    optimizer: 'SGD'
+    learning_rate: 0.01
